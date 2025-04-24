@@ -3,6 +3,8 @@
 
 **MarketScope** is a powerful Streamlit-based application for forecasting stock prices. It integrates deep learning (LSTM, GRU, Hybrid), ensemble models, Monte Carlo simulations, technical indicators, risk metrics, and sentiment analysis of financial news to provide a comprehensive market insight tool.
 
+🌐 **Live Demo**: [marketscope.streamlit.app](https://marketscope.streamlit.app)
+
 ---
 
 ## 👨‍💻 Made By
