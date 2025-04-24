@@ -28,7 +28,7 @@ st.title("📊 MarketScope")
 # --- Sidebar Inputs ---
 st.sidebar.header("Simulation Parameters")
 ticker_symbol = st.sidebar.text_input("Enter Stock Ticker:", "AAPL")
-start_date = st.sidebar.date_input("Start Date:", value=pd.to_datetime("2014-10-25"))
+start_date = st.sidebar.date_input("Start Date:", value=pd.to_datetime("2020-10-25"))
 sample_size = st.sidebar.slider("Days to Simulate:", 50, 300, 100)
 iterations = st.sidebar.slider("Simulations:", 100, 2000, 500)
 ci_level = st.sidebar.slider("Confidence Interval (%)", 80, 99, 95)
