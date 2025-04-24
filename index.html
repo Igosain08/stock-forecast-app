@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSage AI - API Testing</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #202124;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            background-color: #1a73e8;
+            border-color: #1a73e8;
+        }
+        .btn-primary:hover {
+            background-color: #1a65c8;
+            border-color: #1a65c8;
+        }
+        .btn-success {
+            background-color: #34a853;
+            border-color: #34a853;
+        }
+        .btn-success:hover {
+            background-color: #2d9048;
+            border-color: #2d9048;
+        }
+        .btn-info {
+            background-color: #4285f4;
+            border-color: #4285f4;
+            color: white;
+        }
+        .btn-info:hover {
+            background-color: #3a76d8;
+            border-color: #3a76d8;
+            color: white;
+        }
+        .btn-warning {
+            background-color: #fbbc05;
+            border-color: #fbbc05;
+        }
+        .btn-warning:hover {
+            background-color: #e2a904;
+            border-color: #e2a904;
+        }
+        .btn-danger {
+            background-color: #ea4335;
+            border-color: #ea4335;
+        }
+        .btn-danger:hover {
+            background-color: #d33a2d;
+            border-color: #d33a2d;
+        }
+        .btn-secondary {
+            background-color: #5f6368;
+            border-color: #5f6368;
+        }
+        .btn-secondary:hover {
+            background-color: #50535a;
+            border-color: #50535a;
+        }
+        .test-button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .spinner-border {
+            width: 1.5rem;
+            height: 1.5rem;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            color: #5f6368;
+            padding: 10px 20px;
+        }
+        .nav-tabs .nav-link.active {
+            color: #1a73e8;
+            font-weight: 600;
+            border-bottom: 2px solid #1a73e8;
+            background-color: transparent;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1><i class="bi bi-graph-up"></i> StockSage AI - API Testing</h1>
+        
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>API Testing Guide:</strong> Use this page to test your backend modules via API endpoints. Make sure your Flask API server is running at <code>http://localhost:5000</code>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <ul class="nav nav-tabs" id="apiTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Basic Tests</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="false">Forecasting</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="technical-tab" data-bs-toggle="tab" data-bs-target="#technical" type="button" role="tab" aria-controls="technical" aria-selected="false">Technical Analysis</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="advanced-tab" data-bs-toggle="tab" data-bs-target="#advanced" type="button" role="tab" aria-controls="advanced" aria-selected="false">Advanced Features</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="apiTabContent">
+            <!-- Basic Tests Tab -->
+            <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                <div class="card">
+                    <div class="card-header">
+                        API Connection Test
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary test-button" id="testApiBtn">Test API Connection</button>
+                        <button class="btn btn-success test-button" id="getStockBtn">Get Stock Data</button>
+                        <div class="input-group mt-3 mb-3" style="max-width: 300px;">
+                            <span class="input-group-text">Ticker</span>
+                            <input type="text" class="form-control" id="stockTickerInput" value="AAPL">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Server Status
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <span id="serverStatus" class="badge bg-secondary">Unknown</span>
+                            <button class="btn btn-sm btn-outline-primary float-end" id="checkServerBtn">
+                                <i class="bi bi-arrow-repeat"></i> Check Status
+                            </button>
+                        </div>
+                        <p id="serverMessage">Check the server status by clicking "Test API Connection"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Forecasting Tab -->
+            <div class="tab-pane fade" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+                <div class="card">
+                    <div class="card-header">
+                        LSTM Forecast Test
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Ticker</span>
+                                    <input type="text" class="form-control" id="lstmTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Model Type</span>
+                                    <select class="form-select" id="lstmModelSelect">
+                                        <option value="lstm">LSTM</option>
+                                        <option value="gru">GRU</option>
+                                        <option value="hybrid">Hybrid</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Prediction Days</span>
+                                    <input type="number" class="form-control" id="lstmDaysInput" value="7" min="1" max="30">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Window Size</span>
+                                    <input type="number" class="form-control" id="lstmWindowInput" value="60" min="20" max="120">
+                                </div>
+                                <button class="btn btn-info test-button" id="runLstmBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="lstmSpinner" role="status"></span>
+                                    Run LSTM Forecast
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Monte Carlo Ticker</span>
+                                    <input type="text" class="form-control" id="mcTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Simulation Days</span>
+                                    <input type="number" class="form-control" id="mcDaysInput" value="30" min="5" max="365">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Iterations</span>
+                                    <input type="number" class="form-control" id="mcIterationsInput" value="100" min="50" max="5000">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Confidence Level</span>
+                                    <input type="number" class="form-control" id="mcConfidenceInput" value="95" min="80" max="99">
+                                </div>
+                                <button class="btn btn-warning test-button" id="runMonteCarloBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="mcSpinner" role="status"></span>
+                                    Run Monte Carlo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Ensemble Model Forecast
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Ticker</span>
+                                    <input type="text" class="form-control" id="ensembleTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Window Size</span>
+                                    <input type="number" class="form-control" id="ensembleWindowInput" value="20" min="10" max="60">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Prediction Days</span>
+                                    <input type="number" class="form-control" id="ensembleDaysInput" value="5" min="1" max="10">
+                                </div>
+                                <button class="btn btn-success test-button" id="runEnsembleBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="ensembleSpinner" role="status"></span>
+                                    Run Ensemble Forecast
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Technical Analysis Tab -->
+            <div class="tab-pane fade" id="technical" role="tabpanel" aria-labelledby="technical-tab">
+                <div class="card">
+                    <div class="card-header">
+                        Technical Indicators Test
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Ticker</span>
+                                    <input type="text" class="form-control" id="technicalTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Start Date</span>
+                                    <input type="date" class="form-control" id="technicalStartInput">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">End Date</span>
+                                    <input type="date" class="form-control" id="technicalEndInput">
+                                </div>
+                                <button class="btn btn-info test-button" id="runTechnicalBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="technicalSpinner" role="status"></span>
+                                    Get Technical Indicators
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Risk Metrics Ticker</span>
+                                    <input type="text" class="form-control" id="riskTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Period</span>
+                                    <select class="form-select" id="riskPeriodSelect">
+                                        <option value="6mo">6 Months</option>
+                                        <option value="1y" selected>1 Year</option>
+                                        <option value="3y">3 Years</option>
+                                        <option value="5y">5 Years</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-warning test-button" id="runRiskBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="riskSpinner" role="status"></span>
+                                    Get Risk Metrics
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Features Tab -->
+            <div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">
+                <div class="card">
+                    <div class="card-header">
+                        Sentiment Analysis Test
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Ticker</span>
+                                    <input type="text" class="form-control" id="sentimentTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Days</span>
+                                    <input type="number" class="form-control" id="sentimentDaysInput" value="5" min="1" max="30">
+                                </div>
+                                <button class="btn btn-primary test-button" id="runSentimentBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="sentimentSpinner" role="status"></span>
+                                    Get Sentiment Analysis
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Additional advanced test options can go here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Market Regime Detection
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Ticker</span>
+                                    <input type="text" class="form-control" id="regimeTickerInput" value="AAPL">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Window</span>
+                                    <input type="number" class="form-control" id="regimeWindowInput" value="20" min="10" max="50">
+                                </div>
+                                <button class="btn btn-info test-button" id="runRegimeBtn">
+                                    <span class="spinner-border spinner-border-sm d-none" id="regimeSpinner" role="status"></span>
+                                    Detect Market Regime
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>API Response</span>
+                <div>
+                    <button class="btn btn-sm btn-outline-secondary" id="clearResultsBtn">Clear Results</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="loadingIndicator" class="d-none text-center mb-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-primary">Processing request...</p>
+                </div>
+                <pre id="resultsOutput">No results yet. Run a test to see the API response.</pre>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates for date inputs
+            const today = new Date();
+            const oneYearAgo = new Date();
+            oneYearAgo.setFullYear(today.getFullYear() - 1);
+            
+            document.getElementById('technicalStartInput').valueAsDate = oneYearAgo;
+            document.getElementById('technicalEndInput').valueAsDate = today;
+            
+            // API base URL
+            const apiBaseUrl = 'http://localhost:5000/api';
+            
+            // Helper functions
+            function showLoading() {
+                document.getElementById('loadingIndicator').classList.remove('d-none');
+            }
+            
+            function hideLoading() {
+                document.getElementById('loadingIndicator').classList.add('d-none');
+            }
+            
+            function showResults(data) {
+                const resultsOutput = document.getElementById('resultsOutput');
+                resultsOutput.textContent = JSON.stringify(data, null, 2);
+                hideLoading();
+            }
+            
+            function showError(error) {
+                const resultsOutput = document.getElementById('resultsOutput');
+                resultsOutput.textContent = `Error: ${error.message}`;
+                hideLoading();
+            }
+            
+            function updateServerStatus(online) {
+                const serverStatus = document.getElementById('serverStatus');
+                const serverMessage = document.getElementById('serverMessage');
+                
+                if (online) {
+                    serverStatus.textContent = 'Online';
+                    serverStatus.className = 'badge bg-success';
+                    serverMessage.textContent = 'API server is running and responding to requests.';
+                } else {
+                    serverStatus.textContent = 'Offline';
+                    serverStatus.className = 'badge bg-danger';
+                    serverMessage.textContent = 'Unable to connect to API server. Make sure it is running at http://localhost:5000';
+                }
+            }
+            
+            function showSpinner(id) {
+                document.getElementById(id).classList.remove('d-none');
+            }
+            
+            function hideSpinner(id) {
+                document.getElementById(id).classList.add('d-none');
+            }
+            
+            // API test functions
+            async function testApiConnection() {
+                try {
+                    showLoading();
+                    const response = await fetch(`${apiBaseUrl}/test`);
+                    const data = await response.json();
+                    updateServerStatus(true);
+                    showResults(data);
+                    return true;
+                } catch (error) {
+                    updateServerStatus(false);
+                    showError(error);
+                    return false;
+                }
+            }
+            
+            async function getStockData() {
+                try {
+                    const ticker = document.getElementById('stockTickerInput').value;
+                    showLoading();
+                    const response = await fetch(`${apiBaseUrl}/stock/${ticker}`);
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                }
+            }
+            
+            async function runLstmForecast() {
+                try {
+                    const ticker = document.getElementById('lstmTickerInput').value;
+                    const modelType = document.getElementById('lstmModelSelect').value;
+                    const predictionDays = document.getElementById('lstmDaysInput').value;
+                    const windowSize = document.getElementById('lstmWindowInput').value;
+                    
+                    showLoading();
+                    showSpinner('lstmSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/forecast`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ticker: ticker,
+                            model_type: modelType,
+                            prediction_days: parseInt(predictionDays),
+                            window_size: parseInt(windowSize)
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('lstmSpinner');
+                }
+            }
+            
+            async function runMonteCarlo() {
+                try {
+                    const ticker = document.getElementById('mcTickerInput').value;
+                    const days = document.getElementById('mcDaysInput').value;
+                    const iterations = document.getElementById('mcIterationsInput').value;
+                    const confidenceLevel = document.getElementById('mcConfidenceInput').value;
+                    
+                    showLoading();
+                    showSpinner('mcSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/monte-carlo`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ticker: ticker,
+                            days: parseInt(days),
+                            iterations: parseInt(iterations),
+                            confidence_level: parseInt(confidenceLevel)
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('mcSpinner');
+                }
+            }
+            
+            async function runEnsembleForecast() {
+                try {
+                    const ticker = document.getElementById('ensembleTickerInput').value;
+                    const windowSize = document.getElementById('ensembleWindowInput').value;
+                    const predictionDays = document.getElementById('ensembleDaysInput').value;
+                    
+                    showLoading();
+                    showSpinner('ensembleSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/ensemble-forecast`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ticker: ticker,
+                            window_size: parseInt(windowSize),
+                            prediction_days: parseInt(predictionDays)
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('ensembleSpinner');
+                }
+            }
+            
+            async function getTechnicalIndicators() {
+                try {
+                    const ticker = document.getElementById('technicalTickerInput').value;
+                    const startDate = document.getElementById('technicalStartInput').value;
+                    const endDate = document.getElementById('technicalEndInput').value;
+                    
+                    showLoading();
+                    showSpinner('technicalSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/technical?ticker=${ticker}&start=${startDate}&end=${endDate}`);
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('technicalSpinner');
+                }
+            }
+            
+            async function getRiskMetrics() {
+                try {
+                    const ticker = document.getElementById('riskTickerInput').value;
+                    const period = document.getElementById('riskPeriodSelect').value;
+                    
+                    showLoading();
+                    showSpinner('riskSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/risk-metrics?ticker=${ticker}&period=${period}`);
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('riskSpinner');
+                }
+            }
+            
+            async function getSentimentAnalysis() {
+                try {
+                    const ticker = document.getElementById('sentimentTickerInput').value;
+                    const days = document.getElementById('sentimentDaysInput').value;
+                    
+                    showLoading();
+                    showSpinner('sentimentSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/sentiment/${ticker}?days=${days}`);
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('sentimentSpinner');
+                }
+            }
+            
+            async function detectMarketRegime() {
+                try {
+                    const ticker = document.getElementById('regimeTickerInput').value;
+                    const window = document.getElementById('regimeWindowInput').value;
+                    
+                    showLoading();
+                    showSpinner('regimeSpinner');
+                    
+                    const response = await fetch(`${apiBaseUrl}/market-regime?ticker=${ticker}&window=${window}`);
+                    const data = await response.json();
+                    showResults(data);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideSpinner('regimeSpinner');
+                }
+            }
+            
+            // Event listeners
+            document.getElementById('testApiBtn').addEventListener('click', testApiConnection);
+            document.getElementById('getStockBtn').addEventListener('click', getStockData);
+            document.getElementById('checkServerBtn').addEventListener('click', testApiConnection);
+            document.getElementById('runLstmBtn').addEventListener('click', runLstmForecast);
+            document.getElementById('runMonteCarloBtn').addEventListener('click', runMonteCarlo);
+            document.getElementById('runEnsembleBtn').addEventListener('click', runEnsembleForecast);
+            document.getElementById('runTechnicalBtn').addEventListener('click', getTechnicalIndicators);
+            document.getElementById('runRiskBtn').addEventListener('click', getRiskMetrics);
+            document.getElementById('runSentimentBtn').addEventListener('click', getSentimentAnalysis);
+            document.getElementById('runRegimeBtn').addEventListener('click', detectMarketRegime);
+            document.getElementById('clearResultsBtn').addEventListener('click', function() {
+                document.getElementById('resultsOutput').textContent = 'No results yet. Run a test to see the API response.';
+            });
+            
+            // Check server status on page load
+            testApiConnection();
+        });
+    </script>
+</body>
+</html>
