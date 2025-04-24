@@ -5,6 +5,13 @@
 
 ---
 
+## 👨‍💻 Made By
+
+- **Vedant Vardhaan**  
+- **Ishaan Gosain**
+
+---
+
 ## 🚀 Features
 
 - 📈 **Stock Price Forecasting** using LSTM, GRU, and Hybrid models with metrics (MSE, R², MAE).
