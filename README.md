@@ -1,57 +1,104 @@
-# 📊 StockForesight
 
-**StockForesight** is a real-time stock forecasting web app that combines deep learning with Monte Carlo simulation to model short-term stock movements.
+# 📊 MarketScope: Intelligent Stock Forecasting App
 
-🔮 Powered by:
-- LSTM Neural Networks for next-day prediction
-- Monte Carlo Simulation using Brownian Motion
-- Real-time Yahoo Finance data
+**MarketScope** is a powerful Streamlit-based application for forecasting stock prices. It integrates deep learning (LSTM, GRU, Hybrid), ensemble models, Monte Carlo simulations, technical indicators, risk metrics, and sentiment analysis of financial news to provide a comprehensive market insight tool.
 
 ---
 
-## 🚀 Try the App Live
+## 🚀 Features
 
-👉 [Open in Streamlit](https://stock-forecast-app-fumwabtn2ce5vcrglb24uj.streamlit.app)
-
----
-
-## 🌟 Features
-
-- 📈 **Next-day Forecast** using an LSTM model
-- 🎲 **Monte Carlo Simulations** for exploring future price paths
-- 📊 Key metrics: Confidence Interval, Expected Price, Volatility
-- 🧠 Simple, interactive UI — just enter a stock ticker!
+- 📈 **Stock Price Forecasting** using LSTM, GRU, and Hybrid models with metrics (MSE, R², MAE).
+- 🤖 **Ensemble Forecasting** that combines predictions from multiple models for better accuracy.
+- 🔮 **Monte Carlo Simulation** to estimate future price distribution and volatility.
+- 📊 **Technical Indicators** including Moving Averages, RSI, MACD, Bollinger Bands.
+- 🧠 **Risk Analysis** with statistical summaries and visualizations.
+- 📰 **News Sentiment Analysis** to correlate market mood with stock price trends.
 
 ---
 
-## 🖼️ Example Output
+## 🛠️ Installation
 
-### 📈 Forecasting View
-![LSTM Prediction Screenshot](https://raw.githubusercontent.com/Igosain08/stock-forecast-app/main/one.png)
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/marketscope.git
+   cd marketscope
+   ```
 
----
+2. **Create and activate a virtual environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-### 🎲 Simulation View
-![Monte Carlo Simulation Screenshot](https://raw.githubusercontent.com/Igosain08/stock-forecast-app/main/two.png)
+3. **Install the dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
----
-
-## 📦 Built With
-
-- [Streamlit](https://streamlit.io)
-- [TensorFlow](https://tensorflow.org)
-- [YFinance](https://pypi.org/project/yfinance)
-- [NumPy](https://numpy.org)
-- [Matplotlib](https://matplotlib.org)
-- [Scikit-learn](https://scikit-learn.org)
-
----
-
-## 👨‍💻 Created By
-
-**Your Name**  
-💼 [LinkedIn](https://linkedin.com/in/Igosain08)  
-📬 your.email@example.com  
+4. **Run the Streamlit app**:
+   ```bash
+   streamlit run app.py
+   ```
 
 ---
 
+## 🧠 Models Implemented
+
+- **LSTM**: Long Short-Term Memory Neural Network
+- **GRU**: Gated Recurrent Unit Model
+- **Hybrid**: Combination of LSTM and GRU
+- **Ensemble**: Aggregated predictions from LSTM, GRU, and Hybrid
+
+---
+
+## 📦 Project Structure
+
+```
+marketscope/
+├── app.py                    # Main Streamlit frontend
+├── lstm_module.py           # LSTM forecasting logic
+├── monte_carlo_module.py    # Monte Carlo simulations
+├── technical_indicators.py  # Indicator computation
+├── risk_metrics.py          # Risk evaluation functions
+├── model_utils.py           # GRU, Hybrid model definitions
+├── ensemble_models.py       # Ensemble learning logic
+├── sentiment_analysis.py    # Financial news sentiment extraction
+├── requirements.txt         # Project dependencies
+```
+
+---
+
+## 📈 Data Sources
+
+- Historical stock prices via [Yahoo Finance](https://finance.yahoo.com/)
+- News headlines from financial news APIs (handled in `sentiment_analysis.py`)
+
+---
+
+## 📊 Visuals and Insights
+
+- Interactive time-series charts using Plotly
+- Predicted vs. actual performance graphs
+- Confidence intervals and volatility bands
+- Daily sentiment trends with correlation to price changes
+
+---
+
+## ✨ Future Enhancements
+
+- Live market data streaming
+- Portfolio-level analysis and forecasting
+- Sentiment-driven trading alerts
+- Improved dashboard and user interface
+
+---
+
+## 🙌 Contributing
+
+Pull requests are welcome! For major changes, open an issue first to discuss what you would like to change.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
